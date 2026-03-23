@@ -1,7 +1,12 @@
 package dao;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import interfaces.Salvable;
 import interfaces.Storage;
@@ -57,13 +62,29 @@ public class BrandDao implements Storage<Brand>, Salvable<Brand> {
 	
 	@Override
 	public void writeToFile(List<Brand> elem) {
-		// TODO Auto-generated method stub
+		List<String> data = brandsList.stream().map(b -> b.getName()+","+b.getCountry()).collect(Collectors.toList());
+		
+		Path filePath = Path.of("brands_list.csv");
+		
+		try {
+			Files.write(filePath, data);
+		}
+		catch(IOException e) {
+			System.out.println("Errore nella scrittura del file: "+e.getMessage());
+		}
 		
 	}
 
 	@Override
 	public void readFromFile() {
-		// TODO Auto-generated method stub
+		Path filePath = Path.of("brands_list.csv");
+		
+		try(Stream<String> lines = Files.lines(filePath)){
+			lines.forEach(System.out::println);
+		}
+		catch(IOException e) {
+			System.out.println("Errore nella lettura del file: "+e.getMessage());
+		}
 		
 	}
 

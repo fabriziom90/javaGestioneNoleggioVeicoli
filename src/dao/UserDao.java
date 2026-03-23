@@ -64,7 +64,7 @@ public class UserDao implements Storage<User>, Salvable<User> {
 
 	@Override
 	public void writeToFile(List<User> usersList) {
-		List<String> data = usersList.stream().map(u -> u.getName()+" "+u.getSurname()+" "+u.getEmail()).collect(Collectors.toList());
+		List<String> data = usersList.stream().map(u -> u.getName()+","+u.getSurname()+","+u.getEmail()).collect(Collectors.toList());
 		
 		Path filePath = Path.of("users_list.csv");
 		try {

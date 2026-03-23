@@ -67,7 +67,7 @@ public class CarDao implements Storage<Car>, Salvable<Car>{
 	
 	@Override
 	public void writeToFile(List<Car> elem) {
-		List<String> data = carsList.stream().map(c -> c.getBrand().getName()+" "+c.getName()+" "+c.getPlate()+" "+c.getFuelType()+" "+c.isAvailable()).collect(Collectors.toList());
+		List<String> data = carsList.stream().map(c -> c.getBrand().getName()+","+c.getName()+","+c.getPlate()+","+c.getFuelType()+","+c.isAvailable()).collect(Collectors.toList());
 		
 		Path filePath = Path.of("cars_list.csv");
 		
