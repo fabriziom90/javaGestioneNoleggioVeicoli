@@ -1,12 +1,23 @@
 package models;
 
 public class Brand {
+	private static int nextId;
+	private int id;
 	private String name;
 	private String country;
 	
 	public Brand(String name, String country) {
+		this.id = nextId++;
 		this.name = name;
 		this.country = country;
+	}
+	
+	public static int getNextId() {
+		return nextId;
+	}
+
+	public int getId() {
+		return id;
 	}
 
 	public String getName() {

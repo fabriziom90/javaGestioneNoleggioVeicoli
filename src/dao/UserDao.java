@@ -1,12 +1,18 @@
 package dao;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
+import interfaces.Salvable;
 import interfaces.Storage;
 import models.User;
 
-public class UserDao implements Storage<User> {
+public class UserDao implements Storage<User>, Salvable<User> {
 	List<User> usersList = new ArrayList<User>();
 	
 	@Override
@@ -55,5 +61,34 @@ public class UserDao implements Storage<User> {
 		
 		return false;
 	}
+
+	@Override
+	public void writeToFile(List<User> usersList) {
+		List<String> data = usersList.stream().map(u -> u.getName()+" "+u.getSurname()+" "+u.getEmail()).collect(Collectors.toList());
+		
+		Path filePath = Path.of("users_list.csv");
+		try {
+			Files.write(filePath, data);
+		}
+		catch(IOException e) {
+			System.out.println("Errore nella scrittura dei file degli utenti: "+e.getMessage());
+		}
+		
+	}
+
+	@Override
+	public void readFromFile() {
+		Path filePath = Path.of("users_list.csv");
+		
+		try (Stream<String> lines = Files.lines(filePath)){
+			lines.forEach(System.out::println);
+		}
+		catch(IOException e) {
+			System.out.println("Errore nella lettura del file degli utenti: "+e.getMessage());
+		}
+		
+	}
+	
+	
 	
 }
