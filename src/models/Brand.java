@@ -61,7 +61,7 @@ public class Brand {
 		return "Brand [name=" + name + ", country=" + country + "]";
 	}
 	
-	public Strign description() {
+	public String description() {
 		return "Marca: "+name+" stato: "+country;
 	}
 }

@@ -6,22 +6,16 @@ public abstract class Vehicol {
 	private String plate;
 	private int year;
 	private Brand brand;
+	private String name;
 	private boolean available;
 	
-	public Vehicol(String plate, int year, Brand brand, boolean available) {
+	public Vehicol(String plate, int year, Brand brand, String name, boolean available) {
 		this.id = nextId++;
 		this.plate = plate;
 		this.year = year;
 		this.brand = brand;
+		this.name = name;
 		this.available = available;
-	}
-
-	public Brand getBrand() {
-		return brand;
-	}
-
-	public void setBrand(Brand brand) {
-		this.brand = brand;
 	}
 
 	public static int getNextId() {
@@ -38,6 +32,22 @@ public abstract class Vehicol {
 
 	public void setPlate(String plate) {
 		this.plate = plate;
+	}
+	
+	public Brand getBrand() {
+		return brand;
+	}
+
+	public void setBrand(Brand brand) {
+		this.brand = brand;
+	}
+	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public int getYear() {
@@ -83,10 +93,10 @@ public abstract class Vehicol {
 
 	@Override
 	public String toString() {
-		return "Vehicol [id=" + id + ", plate=" + plate + ", year=" + year + ", available=" + available + "]";
+		return "Vehicol [id=" + id + ", plate=" + plate + ", year=" + year + ", available=" + available + ",  brand="+brand.getName()+" name="+name+"]";
 	}
 	
 	public String description() {
-		return "Anno: "+this.year+", disponibile: " +(this.available ? "Sì" : "No")+ " targa: "+this.plate; 
+		return "Anno: "+this.year+", disponibile: " +(this.available ? "Sì" : "No")+ " targa: "+this.plate + ", marca: "+brand.getName()+", modello: "+name; 
 	}
 }
