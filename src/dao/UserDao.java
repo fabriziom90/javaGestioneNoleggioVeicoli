@@ -11,6 +11,7 @@ import java.util.stream.Stream;
 import interfaces.Salvable;
 import interfaces.Storage;
 import models.User;
+import models.Vehicol;
 
 public class UserDao implements Storage<User>, Salvable<User> {
 	List<User> usersList = new ArrayList<User>();
@@ -24,6 +25,14 @@ public class UserDao implements Storage<User>, Salvable<User> {
 	@Override
 	public User findOneById(int id) {
 		User user = usersList.stream().filter(u -> u.getId() == id).findFirst().orElse(null);
+		return user;
+	}
+	
+	
+
+	@Override
+	public User findOneBy(String email) {
+		User user = usersList.stream().filter(u -> u.getEmail().toLowerCase().equals(email.toLowerCase())).findFirst().orElse(null);
 		return user;
 	}
 
@@ -42,8 +51,8 @@ public class UserDao implements Storage<User>, Salvable<User> {
 		User user = usersList.stream().filter(u -> u.getId() == elem.getId()).findFirst().orElse(null);
 		if(user != null) {
 			user.setEmail(elem.getEmail());
-			user.setName(elem.getEmail());
-			user.setSurname(elem.getEmail());
+			user.setName(elem.getName());
+			user.setSurname(elem.getSurname());
 			
 			return true;
 		}
@@ -87,6 +96,16 @@ public class UserDao implements Storage<User>, Salvable<User> {
 			System.out.println("Errore nella lettura del file degli utenti: "+e.getMessage());
 		}
 		
+	}
+	
+	public boolean rentVehicol(User user, Vehicol vehicol) {
+		if(vehicol.isAvailable()) {
+			user.getVehicolList().add(vehicol);
+			vehicol.setAvailable(false);
+			return true;
+		}
+		
+		return false;
 	}
 	
 	

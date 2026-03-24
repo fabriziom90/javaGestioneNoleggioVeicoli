@@ -26,6 +26,13 @@ public class CarDao implements Storage<Car>, Salvable<Car>{
 		Car car = carsList.stream().filter(c -> c.getId() == id).findFirst().orElse(null);
 		return car;
 	}
+	
+
+	@Override
+	public Car findOneBy(String string) {
+		Car car = carsList.stream().filter(c -> c.getPlate().toLowerCase().equals(string.toLowerCase())).findFirst().orElse(null);
+		return car;
+	}
 
 	@Override
 	public boolean add(Car elem) {
@@ -67,7 +74,7 @@ public class CarDao implements Storage<Car>, Salvable<Car>{
 	
 	@Override
 	public void writeToFile(List<Car> elem) {
-		List<String> data = carsList.stream().map(c -> c.getBrand().getName()+","+c.getName()+","+c.getPlate()+","+c.getFuelType()+","+c.isAvailable()).collect(Collectors.toList());
+		List<String> data = carsList.stream().map(c -> c.getBrand().getName()+","+c.getName()+","+c.getPlate()+","+c.getFuelType()+","+(c.isAvailable() ? "Disponibile" : "Non disponibile")).collect(Collectors.toList());
 		
 		Path filePath = Path.of("cars_list.csv");
 		

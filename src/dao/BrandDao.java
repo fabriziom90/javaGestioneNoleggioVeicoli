@@ -12,6 +12,7 @@ import interfaces.Salvable;
 import interfaces.Storage;
 import models.Brand;
 
+
 public class BrandDao implements Storage<Brand>, Salvable<Brand> {
 
 	List<Brand> brandsList = new ArrayList<Brand>();
@@ -25,6 +26,12 @@ public class BrandDao implements Storage<Brand>, Salvable<Brand> {
 	@Override
 	public Brand findOneById(int id) {
 		Brand brand = brandsList.stream().filter(b -> b.getId() == id).findFirst().orElse(null);
+		return brand;
+	}
+	
+	@Override
+	public Brand findOneBy(String string) {
+		Brand brand = brandsList.stream().filter(b -> b.getName().toLowerCase().equals(string.toLowerCase())).findFirst().orElse(null);
 		return brand;
 	}
 

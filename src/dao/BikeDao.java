@@ -11,6 +11,7 @@ import java.util.stream.Stream;
 import interfaces.Salvable;
 import interfaces.Storage;
 import models.Bike;
+import models.Car;
 
 public class BikeDao implements Salvable<Bike>, Storage<Bike> {
 	List<Bike> bikesList = new ArrayList<Bike>();
@@ -24,6 +25,12 @@ public class BikeDao implements Salvable<Bike>, Storage<Bike> {
 	@Override
 	public Bike findOneById(int id) {
 		Bike bike = bikesList.stream().filter(b -> b.getId() == id).findFirst().orElse(null);
+		return bike;
+	}
+	
+	@Override
+	public Bike findOneBy(String string) {
+		Bike bike = bikesList.stream().filter(b -> b.getPlate().toLowerCase().equals(string.toLowerCase())).findFirst().orElse(null);
 		return bike;
 	}
 
@@ -67,7 +74,7 @@ public class BikeDao implements Salvable<Bike>, Storage<Bike> {
 
 	@Override
 	public void writeToFile(List<Bike> elem) {
-		List<String> data = bikesList.stream().map(b -> b.getBrand()+","+b.getName()+","+b.getPlate()+","+b.getYear()+","+b.getEngineType()).collect(Collectors.toList());
+		List<String> data = bikesList.stream().map(b -> b.getId()+","+b.getBrand().getName()+","+b.getName()+","+b.getPlate()+","+b.getYear()+","+b.getEngineType()+","+(b.isAvailable()? "Disponibile" : "Non disponibile")).collect(Collectors.toList());
 		
 		Path filePath = Path.of("bikes_list.csv");
 		

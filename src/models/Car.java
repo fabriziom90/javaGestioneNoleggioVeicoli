@@ -5,12 +5,12 @@ public class Car extends Vehicol{
 	private FuelType fuelType;
 	private Gear gear;
 	
-	public Car(int id, int year, String plate, Brand brand, String name, boolean available, int doorsNumber, FuelType fuelType, Gear gear) {
+	public Car(int year, String plate, Brand brand, String name, boolean available, int doorsNumber, FuelType fuelType, Gear gear) {
 		super(plate, year, brand, name, available);
 		this.fuelType = fuelType;
 		this.gear = gear;
 	}
-
+	
 	public int getDoorsNumber() {
 		return doorsNumber;
 	}
